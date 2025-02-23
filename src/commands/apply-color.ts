@@ -34,7 +34,22 @@ export default async (context: vscode.ExtensionContext) => {
 
   if (vscode.workspace.workspaceFolders) {
     try {
-      const steps = 20;
+      const stepsInput = await vscode.window.showInputBox({
+        placeHolder: 'Enter number of minutes for timer',
+        validateInput: (input) => /^\d+$/.test(input) ? null : 'Please enter a valid number'
+      });
+
+      if (!stepsInput) {
+        vscode.window.showWarningMessage('No number of steps entered. Color transition not applied.');
+        return;
+      }
+
+      const steps = parseInt(stepsInput, 10);
+      if (isNaN(steps) || steps <= 0) {
+        vscode.window.showWarningMessage('Invalid number of steps. Color transition not applied.');
+        return;
+      }
+
       for (let i = 0; i <= steps; i++) {
         const factor = i / steps;
         const interpolatedColor = interpolateColor(currentColor, targetColor, factor);
