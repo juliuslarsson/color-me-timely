@@ -6,21 +6,44 @@ import * as vscode from 'vscode';
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "color-me-timely" is now active!');
+	const chooseHeaderColorDisposable = vscode.commands.registerCommand('color-me-timely.chooseColor', async () => {
+		const color = await vscode.window.showInputBox({
+			placeHolder: 'Enter a color (e.g., #ff0000 for red)',
+			validateInput: (input) => /^#[0-9A-Fa-f]{6}$/.test(input) ? null : 'Please enter a valid hex color code'
+		});
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('color-me-timely.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from Color me timely!');
+		if (color) {
+			context.workspaceState.update('headerColor', color);
+			vscode.window.showInformationMessage(`Color ${color} chosen!`);
+		} else {
+			vscode.window.showWarningMessage('No color entered. Color not chosen.');
+		}
 	});
 
-	context.subscriptions.push(disposable);
+	const applyHeaderColorDisposable = vscode.commands.registerCommand('color-me-timely.applyHeaderColor', async () => {
+		const color = context.workspaceState.get('headerColor', '#ff0000');
+		console.log(`Applying color ${color} to header.`);
+
+		if (vscode.workspace.workspaceFolders) {
+			try {
+				await vscode.workspace.getConfiguration().update('workbench.colorCustomizations', {
+					"titleBar.activeBackground": color,
+					"titleBar.inactiveBackground": color
+				}, vscode.ConfigurationTarget.Workspace);
+				vscode.window.showInformationMessage(`Header color applied: ${color}`);
+			} catch (error) {
+				console.error(`Failed to apply header color: ${error}`);
+				vscode.window.showErrorMessage(`Failed to apply header color: ${error}`);
+			}
+		} else {
+			vscode.window.showErrorMessage('No workspace is open. Please open a workspace first and try again.');
+		}
+	});
+
+	context.subscriptions.push(chooseHeaderColorDisposable);
+	context.subscriptions.push(applyHeaderColorDisposable);
+
 }
 
 // This method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }

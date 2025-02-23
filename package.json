@@ -16,6 +16,14 @@
       {
         "command": "color-me-timely.helloWorld",
         "title": "Hello World"
+      },
+      {
+        "command": "color-me-timely.chooseColor",
+        "title": "Choose color"
+      },
+      {
+        "command": "color-me-timely.applyHeaderColor",
+        "title": "Apply Header Color"
       }
     ]
   },
