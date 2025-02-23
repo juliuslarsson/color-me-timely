@@ -1,21 +1,15 @@
 import * as vscode from 'vscode';
 
-export default async () => {
-  const color = context.workspaceState.get('headerColor', '#ff0000');
-  console.log(`Applying color ${color} to header.`);
+export default async (context: vscode.ExtensionContext) => {
+  const color = await vscode.window.showInputBox({
+    placeHolder: 'Enter a color (e.g., #ff0000 for red)',
+    validateInput: (input) => /^#[0-9A-Fa-f]{6}$/.test(input) ? null : 'Please enter a valid hex color code'
+  });
 
-  if (vscode.workspace.workspaceFolders) {
-    try {
-      await vscode.workspace.getConfiguration().update('workbench.colorCustomizations', {
-        "titleBar.activeBackground": color,
-        "titleBar.inactiveBackground": color
-      }, vscode.ConfigurationTarget.Workspace);
-      vscode.window.showInformationMessage(`Header color applied: ${color}`);
-    } catch (error) {
-      console.error(`Failed to apply header color: ${error}`);
-      vscode.window.showErrorMessage(`Failed to apply header color: ${error}`);
-    }
+  if (color) {
+    context.workspaceState.update('headerColor', color);
+    vscode.window.showInformationMessage(`Color ${color} chosen!`);
   } else {
-    vscode.window.showErrorMessage('No workspace is open. Please open a workspace first and try again.');
+    vscode.window.showWarningMessage('No color entered. Color not chosen.');
   }
 }
