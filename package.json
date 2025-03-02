@@ -14,16 +14,24 @@
   "contributes": {
     "commands": [
       {
-        "command": "color-me-timely.helloWorld",
-        "title": "Hello World"
+        "command": "color-me-timely.setStartColor",
+        "title": "Set start color"
       },
       {
-        "command": "color-me-timely.chooseColor",
-        "title": "Choose color"
+        "command": "color-me-timely.setTargetColor",
+        "title": "Set target"
       },
       {
-        "command": "color-me-timely.applyHeaderColor",
-        "title": "Apply Header Color"
+        "command": "color-me-timely.resetColor",
+        "title": "Reset color"
+      },
+      {
+        "command": "color-me-timely.startTimer",
+        "title": "Start timer"
+      },
+      {
+        "command": "color-me-timely.cancelTimer",
+        "title": "Cancel timer"
       }
     ]
   },
