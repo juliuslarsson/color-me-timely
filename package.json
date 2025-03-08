@@ -4,11 +4,7 @@
   "description": "Non-disruptive timer",
   "version": "0.0.2",
   "publisher": "juliuslarsson",
-  "galleryBanner": {
-    "color": "#FFFFFF",
-    "theme": "dark",
-    "image": "assets/logo.png"
-  },
+  "icon": "assets/logo.png",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/juliuslarsson/color-me-timely.git"
