@@ -3,7 +3,7 @@
   "displayName": "Color me timely",
   "description": "Non-disruptive timer",
   "version": "0.0.1",
-  "publisher": "julle392",
+  "publisher": "juliuslarsson",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/juliuslarsson/color-me-timely.git"
