@@ -3,6 +3,10 @@
   "displayName": "Color me timely",
   "description": "Non-disruptive timer",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juliuslarsson/color-me-timely.git"
+  },
   "engines": {
     "vscode": "^1.97.0"
   },
