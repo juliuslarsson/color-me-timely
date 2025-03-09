@@ -2,9 +2,9 @@
   "name": "color-me-timely",
   "displayName": "Color me timely",
   "description": "Non-disruptive timer",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "juliuslarsson",
-  "icon": "assets/logo.png",
+  "icon": "assets/icon.png",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/juliuslarsson/color-me-timely.git"
@@ -25,7 +25,7 @@
       },
       {
         "command": "color-me-timely.setTargetColor",
-        "title": "Set target"
+        "title": "Set target color"
       },
       {
         "command": "color-me-timely.resetColor",
