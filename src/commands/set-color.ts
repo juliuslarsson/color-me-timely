@@ -1,6 +1,4 @@
-import { get } from 'http';
 import * as vscode from 'vscode';
-
 
 const getColorFromInput = async () => {
   const color = await vscode.window.showInputBox({

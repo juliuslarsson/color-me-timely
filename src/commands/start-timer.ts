@@ -2,16 +2,19 @@ import * as vscode from 'vscode';
 
 
 function hexToRgb(hex: string) {
-  const bigint = parseInt(hex.slice(1), 16);
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
   return {
-    r: (bigint >> 16) & 255,
-    g: (bigint >> 8) & 255,
-    b: bigint & 255
-  };
+    r, g, b
+  }
 }
 
 function rgbToHex(r: number, g: number, b: number) {
-  return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+  const red = r.toString(16).length === 1 ? `0${r.toString(16)}` : r.toString(16);
+  const green = g.toString(16).length === 1 ? `0${g.toString(16)}` : g.toString(16);
+  const blue = b.toString(16).length === 1 ? `0${b.toString(16)}` : b.toString(16);
+  return `#${red}${green}${blue}`;
 }
 
 function interpolateColor(color1: string, color2: string, factor: number) {
@@ -33,16 +36,14 @@ const startTimer = async (context: vscode.ExtensionContext, token: vscode.Cancel
     throw new Error('Unable to start timer')
   }
 
-  const targetColor = context.workspaceState.get('targetColor', '#0000ff');
+  const targetColor = context.workspaceState.get('targetColor', '#665012');
   const startColor = context.workspaceState.get('startColor', '#1f1f1f');
   const colorCustomizations = vscode.workspace.getConfiguration('workbench.colorCustomizations');
   const originalColor = colorCustomizations['titleBar.activeBackground'];
 
 
-  context.workspaceState.update('originalHeaderColor', undefined);
-  if (originalColor) {
-    context.workspaceState.update('originalHeaderColor', originalColor);
-  }
+  context.workspaceState.update('originalHeaderColor', originalColor);
+
   try {
     const nrOfMinutesInput = await vscode.window.showInputBox({
       placeHolder: 'Enter number of minutes for timer',
