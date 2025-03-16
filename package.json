@@ -2,7 +2,7 @@
   "name": "color-me-timely",
   "displayName": "Color me timely",
   "description": "Non-disruptive timer",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "juliuslarsson",
   "icon": "assets/icon.png",
   "repository": {
